@@ -1,0 +1,41 @@
+[user]
+    name = Xavier Marques
+    email = xaviermarques4f@gmail.com
+
+[core]
+    editor = vim
+    autocrlf = input
+
+[color]
+    status = auto
+    interactive = auto
+    diff = auto
+    branch = auto
+    ui = auto
+
+[alias]
+    st = status
+    ci = commit
+    cs = commit -S
+    ms = merge -S
+    cp = cherry-pick
+    cps = cherry-pick -S
+    rs = rebase -S
+    co = checkout
+    pl = pull
+    ps = push
+    pr = pull --rebase
+    br = branch
+    lg = log --graph
+    lgs = log --graph --show-signature
+
+[gpg]
+    program = gpg2
+
+[apply]
+    whitespace = nowarn
+
+[format]
+    pretty=format:%C(yellow)%h%Creset -%C(red)%d%Creset %s %Cgreen(%ar) %C(bold blue)<%an>%Creset
+    #pretty=format:%h (%ad %an) %s
+
