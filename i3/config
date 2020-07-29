@@ -44,7 +44,7 @@ bindsym $mod+z exec --no-startup-id morc_menu
 
 #exec --no-startup-id volumeicon
 #bindsym $mod+Ctrl+m exec terminal -e 'alsamixer'
-exec --no-startup-id start-pulseaudio-x11
+#exec --no-startup-id start-pulseaudio-x11
 #exec --no-startup-id pa-applet
 exec --no-startup-id xrandr --output HDMI1 --mode 1920x1080 --right-of HDMI2
 bindsym $mod+Ctrl+m exec pavucontrol
@@ -57,9 +57,9 @@ bindsym $mod+Ctrl+m exec pavucontrol
 
 
 #Audio
-bindsym $mod+q exec playerctl previous
-bindsym $mod+w exec playerctl play-pause
-bindsym $mod+e exec playerctl next
+#bindsym $mod+q exec playerctl previous
+#bindsym $mod+w exec playerctl play-pause
+#bindsym $mod+e exec playerctl next
 
 # Start Applications
 bindsym $mod+Ctrl+b exec terminal -e 'bmenu'
@@ -109,7 +109,8 @@ bindsym $mod+Shift+Right move right
 workspace_auto_back_and_forth yes
 bindsym $mod+b workspace back_and_forth
 bindsym $mod+Shift+b move container to workspace back_and_forth; workspace back_and_forth
-
+bindsym $mod+x move container to output right
+bindsym $mod+c move workspace to output right
 # split orientation
 # bindsym $mod+h split h;exec notify-send 'tile horizontally'
 # bindsym $mod+v split v;exec notify-send 'tile vertically'
@@ -336,7 +337,7 @@ set_from_resource $term_color15    color15
 # Start i3bar to display a workspace bar (plus the system information i3status if available)
 bar {
 	i3bar_command i3bar
-	status_command bumblebee-status -m date time cpu memory pasink spotify -p time.format="%H:%M" -t gruvbox-powerline
+	status_command bumblebee-status -m date time cpu memory spotify -p time.format="%H:%M" -t gruvbox-powerline
 	position bottom
 
 ## please set your primary output first. Example: 'xrandr --output eDP1 --primary'
