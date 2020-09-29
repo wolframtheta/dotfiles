@@ -2,7 +2,7 @@
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH="/home/wolfram/ohmyzsh"
+export ZSH="/home/wolfram/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
@@ -132,11 +132,17 @@ alias ll="ls -lha"
 alias mongorun="mongod --directoryperdb --dbpath $HOME/Dev/mongoDBs"
 alias robo3t="$HOME/Programs/robo3t/bin/robo3t &"
 alias vpn-connect="f5fpc -s -t https://upclink.upc.edu -u x.marques -p 'Aobcd8663'"
+alias vpn-disconnect="f5fpc --stop"
 alias vpn-info="f5fpc --info"
 alias nomachine="/usr/NX/bin/nxplayer &"
 function boost() {
 	sudo isw -b $1
 }
 alias temp="sudo isw -r 16R3EMS1"
+alias add-ssh="eval $(ssh-agent) && ssh-add $HOME/.ssh/x.marques.rsa"
 
-
+function workspace() {
+	sed -r -i 's/^(bindsym \$mod\+x move container to output )(\w*)/\1'$1'/' $HOME/.i3/config
+	sed -r -i 's/^(bindsym \$mod\+c move workspace to output )(\w*)/\1'$1'/' $HOME/.i3/config
+	i3-msg reload
+}
