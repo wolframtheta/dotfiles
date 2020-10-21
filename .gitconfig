@@ -26,7 +26,7 @@
     ps = push
     pr = pull --rebase
     br = branch
-    lg = log --graph
+    lg = log --graph --all
     lgs = log --graph --show-signature
 
 [gpg]
