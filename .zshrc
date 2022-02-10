@@ -98,13 +98,8 @@ source $ZSH/oh-my-zsh.sh
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 
-export NVM_DIR="$HOME/.nvm"
-export NVM_SOURCE="/usr/share/nvm"
-[ -s "$NVM_SOURCE/nvm.sh" ] && \. "$NVM_SOURCE/nvm.sh"  # This loads nvm
-[ -s "$NVM_SOURCE/bash_completion" ] && \. "$NVM_SOURCE/bash_completion"  # This loads nvm bash_completion
-
-export ANDROID_HOME=$HOME/Android/Sdk
-export PATH=$PATH:$ANDROID_HOME/tools
+export ANDROID_SDK_ROOT=$HOME/Android/Sdk
+export PATH=$PATH:$ANDROID_SDK_ROOT/tools
 alias gochrome='google-chrome-stable --disable-web-security --user-data-dir="/home/wolfram/chrome"'
 alias cors='npm start --prefix /home/wolfram/Programs/cors-anywhere/'
 export PATH="$HOME/.local/lib/python3.8/site-packages/:$PATH"
@@ -118,9 +113,13 @@ fi
 
 }
 
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init -)"
-eval "$(pyenv virtualenv-init -)"
+export NVM_DIR="$([ -z "${XDG_CONFIG_HOME-}" ] && printf %s "${HOME}/.nvm" || printf %s "${XDG_CONFIG_HOME}/nvm")"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+
+
+# export PATH="$HOME/.pyenv/bin:$PATH"
+# eval "$(pyenv init -)"
+# eval "$(pyenv virtualenv-init -)"
 export PATH=~/.mongodb/versions/mongodb-current/bin:$PATH
 
 alias pip36="$HOME/.pyenv/versions/3.6.0/bin/pip"
@@ -131,7 +130,7 @@ alias ionic-capacitor-run="ionic build && npx cap sync"
 alias ll="ls -lha"
 alias mongorun="mongod --directoryperdb --dbpath $HOME/Dev/mongoDBs"
 alias robo3t="$HOME/Programs/robo3t/bin/robo3t &"
-alias vpn-connect="f5fpc -s -t https://upclink.upc.edu -u x.marques -p 'Aobcd8663'"
+alias vpn-connect="f5fpc -s -t https://upclink.upc.edu -u x.marques -p '###password####'"
 alias vpn-disconnect="f5fpc --stop"
 alias vpn-info="f5fpc --info"
 alias nomachine="/usr/NX/bin/nxplayer &"
@@ -144,5 +143,38 @@ alias add-ssh="eval $(ssh-agent) && ssh-add $HOME/.ssh/x.marques.rsa"
 function workspace() {
 	sed -r -i 's/^(bindsym \$mod\+x move container to output )(\w*)/\1'$1'/' $HOME/.i3/config
 	sed -r -i 's/^(bindsym \$mod\+c move workspace to output )(\w*)/\1'$1'/' $HOME/.i3/config
+	if [[ $1 == "alone" ]]
+	then
+		xrandr --auto
+	else
+		moveTo="left-of"
+		if [[ $1 == "left" ]]
+		then
+			moveTo="right-of"
+		elif [[ $1 == "up" ]]
+		then
+			moveTo="above"
+		elif [[ $1 == "down" ]]
+		then
+			moveTo="below"
+		else
+			moveTo="left-of"
+		fi
+		xrandr --output HDMI-1 --mode 1920x1080 --$moveTo eDP-1
+	fi
 	i3-msg reload
 }
+alias upf-vpn="forticlientsslvpn_cli --server https://myvpn.upf.edu:443 --vpnuser u164877 --keepalive"
+alias ssh-upf="ssh u164877@10.49.0.95"
+
+# eval "$(echo $(nslookup hell.upcnet.es | awk '/Address:/ {print $2}' | tail -n 1) jenkins.hell.upcnet.es sonar.hell.upcnet.es >> /etc/hosts)"
+#
+#
+cd() {
+  builtin cd "$@"
+  if [[ -f .nvmrc ]]; then
+    nvm use > /dev/null
+  fi
+}
+
+[ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion"  # This loads nvm bash_completion
